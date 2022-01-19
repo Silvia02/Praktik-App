@@ -1,0 +1,57 @@
+@import url(https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,900);
+body {
+    font-family: 'Cinzel Decorative', cursive;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.topnav {
+    display: flex;
+    justify-content: center;
+    gap: 50%;
+    margin-top: 20px;
+}
+
+.topnav a {
+    text-decoration: none;
+    color: #e930be;
+}
+
+.nail-title {
+    display: flex;
+    font-size: large;
+    justify-content: center;
+    color: rgb(189, 16, 189);
+}
+
+.nail {
+    line-height: 0.5;
+    text-align: center;
+    color: #e930be;
+}
+
+.nail span {
+    display: inline-block;
+    position: relative;
+}
+
+.nail span:before,
+.nail span:after {
+    content: "";
+    position: absolute;
+    height: 5px;
+    border-bottom: 5px solid rgb(7, 7, 7);
+    border-top: 1px solid rgb(189, 16, 189);
+    top: 10;
+    width: 500px;
+}
+
+.nail span:before {
+    right: 100%;
+    margin-right: 15px;
+}
+
+.nail span:after {
+    left: 100%;
+    margin-left: 15px;
+}
