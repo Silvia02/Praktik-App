@@ -1,57 +1,361 @@
 @import url(https://fonts.googleapis.com/css?family=Cinzel+Decorative:400,900);
 body {
-    font-family: 'Cinzel Decorative', cursive;
-    background-size: cover;
-    background-repeat: no-repeat;
+  font-family: "Cinzel Decorative", cursive;
+  background-size: cover;
 }
 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+
+.nav ul {
+  margin: 0;
+}
+
+.nav li {
+  display: inline;
+}
+
+.nav a {
+  display: inline-block;
+  padding: .5em;
+  color: white;
+  text-decoration: none;
+}
+
+.main-nav {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: lighter;
+  border-bottom: 1px solid rgba(255, 255, 255, .3)
+}
+
+.main-nav li {
+  padding: 0 5%;
+}
+
+.nav a:hover {
+  background-color: rgba(255, 255, 255, .3)
+}
+
+.main-header {
+  background-color: rgba(0, 0, 0, .6);
+  background-image: url("photos/Background.jpg");
+  background-blend-mode: multiply;
+  background-size: cover;
+  padding-bottom: 30px;
+}
+.app-name {
+  text-align: center;
+  margin: 0;
+  font-size: 4em;
+  font-weight: normal;
+  color: rgb(242, 131, 91);
+}
+
+.app-name-large {
+  font-size: 4em;
+}
+h1 {
+  width: 3%;
+  position: relative;
+  top: 60px;
+  left: 90%;
+  cursor: pointer;
+}
+
+h1:before {
+  content: attr(data-count);
+  color: black;
+  position: absolute;
+  right: 20px;
+  font-size: 15px;
+  text-align: center;
+  top: -15px;
+  width: 20px;
+  height: 20px;
+  background: rgb(242, 131, 91);
+  border-radius: 50%;
+  opacity: 0;
+  left: -20px;
+}
+
+h1.zero:before {
+  opacity: 1;
+}
+
+h1 i {
+  color: rgb(242, 131, 91);
+  top: -10px;
+  font-size: 12px;
+  padding: 0 5px;
+  vertical-align: top;
+  margin-left: -10px;
+}
+
+/* .badge {
+  padding: 0 5px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+  font-size: 12px;
+  background: #eb04c9;
+  color: #fff;
+  padding: 0 5px;
+} */
+
 .topnav {
-    display: flex;
-    justify-content: center;
-    gap: 50%;
-    margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 50%;
 }
 
 .topnav a {
-    text-decoration: none;
-    color: #e930be;
+  text-decoration: none;
+  color: black;
+  margin-top: 60px;
+  font-weight: 900;
 }
 
 .nail-title {
-    display: flex;
-    font-size: large;
-    justify-content: center;
-    color: rgb(189, 16, 189);
+  display: flex;
+  font-size: large;
+  justify-content: center;
+  color: rgb(189, 16, 189);
 }
 
 .nail {
-    line-height: 0.5;
-    text-align: center;
-    color: #e930be;
+  line-height: 0.5;
+  text-align: center;
+  color: #e930be;
 }
 
 .nail span {
-    display: inline-block;
-    position: relative;
+  display: inline-block;
+  position: relative;
 }
 
-.nail span:before,
-.nail span:after {
-    content: "";
-    position: absolute;
-    height: 5px;
-    border-bottom: 5px solid rgb(7, 7, 7);
-    border-top: 1px solid rgb(189, 16, 189);
-    top: 10;
-    width: 500px;
+/* Second Section */
+
+.secondTitle {
+  display: flex;
+  justify-content: center;
 }
 
-.nail span:before {
-    right: 100%;
-    margin-right: 15px;
+.secondTitle h3 {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 15px;
+}
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 1.5em;
+  margin-top: 100px;
 }
 
-.nail span:after {
-    left: 100%;
-    margin-left: 15px;
+#MascaraProducts #FirstProducts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.products {
+  align-items: center;
+  padding: 5px;
+  margin: 30px;
+  background-color: rgb(237, 140, 104);
+}
+.products > .shop-item-image {
+  padding: 10px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.shop-item-button {
+  color: black;
+  background-color: white;
+  border: none;
+  border-radius: 0.3em;
+  font-weight: bold;
+  cursor: pointer;
+  height: 34px;
+  margin-left: 20%;
+}
+.shop-item-button:hover{
+  background-color: rgb(155, 4, 31);
+
+}
+.products > .cart-price {
+  width: 20%;
+  font-size: 1.2em;
+  padding: 10px;
+}
+.products p {
+  font-size: 1.2em;
+  color: #333;
+  padding: 10px;
+}
+.products i {
+  font-size: 1.2em;
+  color: #333;
+  padding: 10px;
+}
+
+/* section div span 
+  position: absolute;
+  top: 14px;
+  left: 13px;
+  max-width: 700px;
+  display: none;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+section div span img {
+  width: 100%;
+  height: 100%;
+} */
+
+/* section div:nth-child(1) > span.active {
+  animation: first 0.5s ease-in;
+  z-index: 2;
+  display: block;
+}
+
+section div:nth-child(2) > span.active {
+  animation: second 0.5s ease-in;
+  z-index: 2;
+  display: block;
+}
+
+section div:nth-child(3) > span.active {
+  animation: third 0.5s ease-in;
+  z-index: 2;
+  display: block;
+}
+
+section div:nth-child(4) > span.active {
+  animation: four 0.5s ease-in;
+  z-index: 2;
+  display: block;
+}
+
+@keyframes first {
+  to {
+    width: 30px;
+    height: 20px;
+    left: 1290px;
+    top: -70px;
+  }
+}
+
+@keyframes second {
+  to {
+    width: 30px;
+    height: 20px;
+    left: 948px;
+    top: -70px;
+  }
+}
+
+@keyframes third {
+  to {
+    width: 30px;
+    height: 20px;
+    left: 606px;
+    top: -70px;
+  }
+}
+
+@keyframes four {
+  to {
+    width: 30px;
+    height: 20px;
+    left: 265px;
+    top: -70px;
+  }
+} */
+
+.select {
+  display: none;
+  padding: 5%;
+  background: rgb(147, 138, 138);
+  position: absolute;
+  align-items: center;
+  margin-left: 30%;
+  margin-right: 20%;
+  flex-wrap: wrap;
+}
+
+.select.display {
+  top: 10px;
+  display: block;
+}
+
+.select > .products {
+  display: flex;
+  border: 1px solid white;
+  flex-wrap: wrap;
+}
+.select > .products h4 i {
+  margin: 20px;
+}
+
+.select > .products img {
+  width: auto;
+  height: 100%;
+}
+
+.select div p {
+  padding: 10px;
+  color: black;
+}
+.select .products > button {
+  color: white;
+  background-color: #eb5757;
+  border: none;
+  border-radius: 0.3em;
+  font-weight: bold;
+  cursor: pointer;
+  height: 34px;
+}
+.select .products > .cart-price {
+  width: 20%;
+  font-size: 1.2em;
+  color: #333;
+}
+.select .products > .cart-quantity-input {
+  height: 34px;
+  width: 50px;
+  border-radius: 5px;
+  border: 1px solid #56ccf2;
+  background-color: #eee;
+  color: #333;
+  padding: 0;
+  text-align: center;
+  font-size: 1.2em;
+  margin-right: 25px;
+}
+.select .products > p {
+  text-align: end;
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.select .shop-item-button {
+  display: none;
+}
+
+.select div span {
+  display: none;
 }

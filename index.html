@@ -1,34 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <title>Hello</title>
-</head>
+  </head>
 
-<body>
-    <header>
-        <div class="topnav">
-            <a href="#addToCar">Home</a>
-            <div class="addToCart">
-                <a href="#about"><i class="fa fa-shopping-cart" style="font-size:24px"></i></a>
-            </div>
-        </div>
+  <body>
+    <header class="main-header">
+      <nav class="main-nav nav">
+        <ul>
+          <!-- <li><a href="#">Home</a></li> -->
+          <li>
+            <h1><i class="fa fa-shopping-cart" style="font-size: 24px"></i></h1>
+          </li>
+          <!-- <span class="badge badge-warning">0</span> -->
+        </ul>
+      </nav>
+      <h2 class="app-name app-name-large">Beauty Woman</h2>
     </header>
 
-    <div class="nail-title">
-        <h1>Nail Polishes</h1>
-    </div>
-    <p class="subtitle nail"><span><img src="photos/nail.png" alt="nail photo" width="150" height="150"></span></p>
-    <section class="products">
+    <!-- <div class="nail-title">
+     
+    </div> -->
+    <p class="subtitle nail">
+      <span
+        ><img src="photos/nail.png" alt="nail photo" width="150" height="150"
+      /></span>
+    </p>
 
+    <section class="container">
+      <section id="FirstProducts"></section>
 
+      <div class="secondTitle">
+        <h3>Mascaras</h3>
+      </div>
+
+      <section id="MascaraProducts"></section>
     </section>
 
-</body>
-<script src="script.js"></script>
-
+    <div class="select"></div>
+  </body>
+  <script src="script.js"></script>
 </html>
