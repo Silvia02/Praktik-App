@@ -118,6 +118,8 @@ async function getProducts() {
         Array.from(removeButtons).forEach((removeButton) => {
           removeButton.addEventListener("click", () => {
             removeButton.parentNode.remove();
+           
+          
             updateCartTotal();
           });
         });
@@ -154,7 +156,7 @@ async function getProducts() {
               "cart-quantity-input"
             )[0];
             console.log(quantityElement);
-            let price = parseFloat(priceElement.innerText.replace("$", " "));
+            let price = parseFloat(priceElement.innerText.replace("$", " "));// do only numbers
             let quantity = quantityElement.value;
             total = total + price * quantity;
             console.log(total);
