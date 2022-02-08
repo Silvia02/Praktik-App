@@ -6,6 +6,7 @@ if (document.readyState == "loading") {
 
 const productsData = document.getElementById("FirstProducts");
 const mascaraData = document.getElementById("MascaraProducts");
+const cartRouwContainer = document.getElementById("containerCart");
 
 const UrlProductsLipstick =
   "http://makeup-api.herokuapp.com/api/v1/products.json?brand=covergirl&product_type=lipstick";
@@ -24,149 +25,140 @@ async function getProducts() {
     for (let productItems of data) {
       allNails += `<div class='products'>`;
       allNails += `<img class="shop-item-image" src="${productItems["image_link"]} "/>`;
-      allNails += `<button class='shop-item-button' data-id="${productItems["id"]}">ADD TO CART</button>`;
+      allNails += `<button id='shop-item-button' data-id="${productItems["id"]}">ADD TO CART</button>`;
       allNails += `<h4>`;
       allNails += `<i>${productItems["brand"]}</i>`;
       allNails += `</h4>`;
       allNails += `<span></span>`;
-      allNails += `<p>${productItems["name"]}</p>`;
+      allNails += `<p class="item-name">${productItems["name"]}</p>`;
       allNails += `<p class="cart-price">$ ${productItems["price"]}</p><br>`;
       allNails += `</div>`;
     }
     productsData.innerHTML = allNails;
 
     //API call two
-
     let responseTwo = await fetch(`${UrlProductMascara}`);
     let productMascara = await responseTwo.json();
-    console.log(productMascara);
+    //console.log(productMascara);
 
     let mascarasImages = "";
     for (let allMascara of productMascara) {
       mascarasImages += `<div class="products">`;
-      mascarasImages += `<img class="shop-item-image" src=" ${allMascara["image_link"]}"/>`;
-      mascarasImages += `<button class="shop-item-button" data-id=${allMascara["id"]}">ADD TO CART</button>`;
+      mascarasImages += `<img class="shop-item-image" src="${allMascara["image_link"]}"/>`;
+      mascarasImages += `<button id="shop-item-button" type="button">ADD TO CART</button>`;
       mascarasImages += `<h4>`;
       mascarasImages += `<i>${allMascara["brand"]}</i>`;
       mascarasImages += `</h4>`;
       mascarasImages += `<span></span>`;
-      mascarasImages += `<p>${allMascara["name"]} </p>`;
+      mascarasImages += `<p class="item-name">${allMascara["name"]} </p>`;
       mascarasImages += `<p class="cart-price">$ ${allMascara["price"]}</p><br>`;
       mascarasImages += `</div>`;
     }
 
     mascaraData.innerHTML = mascarasImages;
+
+    //event to remove clicked product row inside the cart
+    let removeButtons = document.getElementsByClassName("btn-danger");
+    console.log(removeButtons);
+    for (let i = 0; i < removeButtons.length; i++) {
+      let removed = removeButtons[i];
+      removed.addEventListener("click", removeCartItem);
+    }
+
+    // get all Button inside products container
+    let testbtn = Array.from(document.querySelectorAll("button"));
+    console.log(testbtn);
+    for (let i = 0; i < testbtn.length; i++) {
+      var button = testbtn[i];
+      button.addEventListener("click", addItemEvent);
+    }
+
+    //find the right parentElement div and their children
+    function addItemEvent(event) {
+      var button = event.target;
+      let resultBtn = button.parentElement;
+      console.log(resultBtn);
+
+      let prices = resultBtn.getElementsByClassName("cart-price")[0].innerHTML;
+      console.log(prices);
+      let imageSrc = resultBtn.getElementsByClassName("shop-item-image")[0].src;
+      console.log(imageSrc);
+      let names = resultBtn.getElementsByClassName("item-name")[0].innerHTML;
+      console.log(names);
+
+      copyToCart(prices, imageSrc, names);
+    }
+    // loop through all cart inputs
+    let inputQuantity = document.getElementsByClassName("cart-quantity-input");
+    for (let i = 0; i < inputQuantity.length; i++) {
+      let inputResult = inputQuantity[i];
+      inputResult.addEventListener("change", quantityChanged);
+      updateCart();
+    }
+    // remove parentElement CartRow
+    function removeCartItem(event) {
+      var buttonClicked = event.target;
+      buttonClicked.parentElement.parentElement.remove();
+      updateCart();
+    }
+
+    // The input can´t be under 0, -1
+    function quantityChanged(event) {
+      let input = event.target;
+      if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1;
+      }
+      updateCart();
+    }
+
+      
+       //create a new DIV with tre parameters
+    function copyToCart(prices, imageSrc, names) {
+      let newDiv = document.createElement("div");
+      newDiv.className = "newDivCart";
+      var cartRowContents = `
+          <div class="cart-item cart-column">
+              <img class="cart-item-image" src="${imageSrc}" width="100" height="100">
+              <span class="cart-item-title">${names}</span>
+          </div>
+          <span class="cart-price cart-column">${prices}</span>
+          <div class="cart-quantity cart-column">
+              <input class="cart-quantity-input" type="number" value="1">
+              <button class="btn-danger" type="button">REMOVE</button>
+          </div>`;
+      newDiv.innerHTML = cartRowContents;
+      cartRouwContainer.append(newDiv);
+      newDiv.addEventListener("change", quantityChanged);
+      newDiv
+        .getElementsByClassName("btn-danger")[0]
+        .addEventListener("click", removeCartItem);
+    }
+
+        //update the Cart Total price
+    function updateCart() {
+      let cartContainer = document.getElementById("containerCart");
+      let rowsOfProducts = cartContainer.getElementsByClassName("newDivCart");
+      console.log(rowsOfProducts);
+      let total = 0;
+      for (let i = 0; i < rowsOfProducts.length; i++) {
+        let rowsOfProductsResult = rowsOfProducts[i];
+
+        let priceElement = rowsOfProductsResult.getElementsByClassName(
+          "cart-price"
+        )[0];
+        let quantityElement = rowsOfProductsResult.getElementsByClassName(
+          "cart-quantity-input"
+        )[0];
+        var price = parseFloat(priceElement.innerText.replace("$", " "));
+        var quantity = quantityElement.value;
+        total = total + price * quantity;
+        console.log(total);
+      }
+      total = Math.round(total * 100) / 100;
+      document.getElementsByClassName("cart-total-price")[0].innerText =
+        "$" + total;
+    }
   } catch (message) {
     throw new Error(message);
   }
-
-  // create a new container inside the CART with added products
-  var noti = document.querySelector("h1");
-  let btns = document.getElementsByClassName("shop-item-button");
-  var select = document.querySelector(".select");
-
-  //loop through and add data-count with clicked products
-  for (let btn of btns) {
-    btn.addEventListener("click", (e) => {
-      var btnT = Number(noti.getAttribute("data-count") || 0);
-      noti.setAttribute("data-count", btnT + 1);
-      noti.classList.add("zero");
-
-      // image --animation to cart ---//
-      // var image = e.target.parentNode.parentNode.querySelector("img");
-      // var span = e.target.parentNode.parentNode.querySelector("span");
-      // var s_image = image.cloneNode(false);
-      // span.appendChild(s_image)[0];
-      // span.classList.add("active");
-
-      // setTimeout(() => {
-      //   span.classList.remove("active");
-      //   span.removeChild(s_image);
-      // }, 500);
-
-      // copy and paste into a new container //
-      var inputElem = document.createElement("input");
-      inputElem.type = "number";
-      inputElem.value = "1";
-      inputElem.className = "cart-quantity-input";
-      // var para = document.createElement("button");
-      // para.innerHTML = "Buy";
-      var removeBtn = document.createElement("button");
-      removeBtn.className = "remove";
-      removeBtn.innerHTML = "Remove";
-      var backBtn = document.createElement("a");
-      backBtn.className = "backBtn";
-      backBtn.innerHTML = "back";
-      backBtn.href = "index.html";
-      var parent = e.target.parentNode; //select
-      var clone = parent.cloneNode(true);
-
-      select.appendChild(clone);
-      clone.appendChild(inputElem);
-      //clone.appendChild(para);
-      clone.appendChild(removeBtn);
-      select.appendChild(backBtn);
-
-      //display the cloned Node
-      if (clone) {
-        noti.onclick = () => {
-          select.classList.toggle("display");
-          changed();
-        };
-        //event to remove clicked product row inside the cart
-        const removeButtons = document.getElementsByClassName("remove");
-        Array.from(removeButtons).forEach((removeButton) => {
-          removeButton.addEventListener("click", () => {
-            removeButton.parentNode.remove();
-           
-          
-            updateCartTotal();
-          });
-        });
-        //loop through input products row inside the cart to change their price
-        const inputs = document.querySelectorAll("input");
-        for (let i = 0; i < inputs.length; i++) {
-          const result = inputs[i];
-          console.log(result);
-          result.addEventListener("change", changed);
-        }
-        // The input can´t be under 0, -1
-        function changed(event) {
-          const input = event.target;
-          if (isNaN(input.value) || input.value <= 0) {
-            input.value = 1;
-          }
-
-          updateCartTotal();
-        }
-        //update the Cart Total price
-        function updateCartTotal() {
-          let cartContainer = document.querySelector(".select");
-          let cartRow = cartContainer.querySelectorAll(".products");
-
-          //console.log(cartContainer)
-          console.log(cartRow); //nodeList
-          let total = 0;
-          for (let i = 0; i < cartRow.length; i++) {
-            let result = cartRow[i];
-            console.log(result); // class Products
-            let priceElement = result.getElementsByClassName("cart-price")[0];
-            console.log(priceElement); // price
-            let quantityElement = result.getElementsByClassName(
-              "cart-quantity-input"
-            )[0];
-            console.log(quantityElement);
-            let price = parseFloat(priceElement.innerText.replace("$", " "));// do only numbers
-            let quantity = quantityElement.value;
-            total = total + price * quantity;
-            console.log(total);
-            total = Math.round(total * 100) / 100;
-          }
-          let totalPrice = document.createElement("p");
-          cartContainer.appendChild(totalPrice);
-          totalPrice.innerText = "TOTAL: " + " $ " + total;
-        }
-      }
-    }); //event
-  } //the for loop ends
 }
